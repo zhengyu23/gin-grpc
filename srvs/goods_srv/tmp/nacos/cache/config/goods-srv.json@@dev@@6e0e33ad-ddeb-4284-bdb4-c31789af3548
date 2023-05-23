@@ -1,0 +1,20 @@
+{
+  "name": "goods-srv",
+  "host":"192.168.31.83",
+  "tags":["immoc","xrUncle","goods","srv"],
+  "mysql": {
+    "host": "192.168.31.142",
+    "port": 3306,
+    "user": "root",
+    "password": "root",
+    "db": "chenbing_goods_srv"
+  },
+  "es": {
+    "host":"192.168.31.142",
+    "port": 9200
+  },
+  "consul": {
+    "host": "192.168.31.142",
+    "port": 8500
+  }
+}

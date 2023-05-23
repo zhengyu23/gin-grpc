@@ -1,0 +1,71 @@
+package consul
+
+import (
+	"fmt"
+
+	"github.com/hashicorp/consul/api"
+)
+
+type Register struct {
+	Host string
+	Port int
+}
+type RegistryClient interface {
+	Register(address string, port int, name string, tags []string, id string) error
+	DeRegister(serviceId string) error
+}
+
+func NewRegistryClient(host string, port int) RegistryClient {
+	return &Register{
+		Host: host,
+		Port: port,
+	}
+}
+
+func (r *Register) Register(address string, port int, name string, tags []string, id string) error {
+	cfg := api.DefaultConfig()
+	cfg.Address = fmt.Sprintf("%s:%d", r.Host, r.Port)
+
+	client, err := api.NewClient(cfg)
+	if err != nil {
+		panic(err)
+	}
+	//生成对应的检grpc查对象
+	check := &api.AgentServiceCheck{
+		//GRPC:                           fmt.Sprintf("%s:%d", address, port),
+		//Timeout:                        "5s",
+		//Interval:                       "5s",
+		//DeregisterCriticalServiceAfter: "15s",
+		GRPC:                           fmt.Sprintf("%s:%d", address, port), // 能 ping通的
+		Timeout:                        "15s",                               // x秒超时
+		Interval:                       "5s",                                // 每x秒检查一次
+		DeregisterCriticalServiceAfter: "15s",
+	}
+
+	//生成注册对象
+	registration := new(api.AgentServiceRegistration)
+	registration.Name = name
+	registration.ID = id
+	registration.Port = port
+	registration.Tags = tags
+	registration.Address = address
+	registration.Check = check
+
+	err = client.Agent().ServiceRegister(registration)
+	if err != nil {
+		panic(err)
+	}
+	return nil
+}
+
+func (r *Register) DeRegister(serviceId string) error {
+	cfg := api.DefaultConfig()
+	cfg.Address = fmt.Sprintf("%s:%d", r.Host, r.Port)
+
+	client, err := api.NewClient(cfg)
+	if err != nil {
+		return err
+	}
+	err = client.Agent().ServiceDeregister(serviceId)
+	return err
+}
