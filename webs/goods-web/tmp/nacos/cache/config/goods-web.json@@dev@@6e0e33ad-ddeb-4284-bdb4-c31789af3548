@@ -1,0 +1,22 @@
+{
+  "host": "192.168.31.83",
+  "name": "goods-web",
+  "port": 8022,
+  "tags":["imooc","xrUncle","goods","web"],
+  "goods_srv": {
+    "name": "goods-srv"
+  },
+  "jwt": {
+    "key": "3CpniJ3Bc22*dgKV^##VX^UYm%PFAEU#"
+  },
+  "consul": {
+    "host": "192.168.31.142",
+    "port": 8500,
+    "heartbeat.enabled":true
+  },
+  "jaeger": {
+    "host": "192.168.31.142",
+    "port": 6831,
+    "name": "chenbing"
+  }
+}
