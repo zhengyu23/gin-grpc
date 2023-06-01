@@ -1,0 +1,7 @@
+host: '192.168.31.142'
+port: 8848
+namespace: '5cacc2dd-0585-4826-9281-9e3609f830b9'
+user: 'nacos'
+password: 'nacos'
+dataid: 'inventory-srv.json'
+group: 'pro'

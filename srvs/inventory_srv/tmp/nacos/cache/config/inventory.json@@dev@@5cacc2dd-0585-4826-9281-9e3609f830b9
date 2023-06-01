@@ -1,0 +1,16 @@
+{
+    "name": "inventory-srv",
+    "host": "192.168.137.248",
+    "tags":["chenbing","xrUncle","inventory","srv"],
+    "mysql": {
+        "host":"192.168.137.192",
+        "port":3306,
+        "user":"root",
+        "password":"root",
+        "db":"chenbing_inventory_srv"
+    },
+    "consul": {
+        "host":"192.168.137.192",
+        "port":8500
+    }
+}
